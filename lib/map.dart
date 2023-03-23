@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MapsPage extends StatefulWidget {
   @override
@@ -18,6 +19,23 @@ class _MapsPageState extends State<MapsPage> {
   Future _goToRMUTT() async {
     mapController?.animateCamera(CameraUpdate.newLatLngZoom(
         LatLng(14.036462698183556, 100.72544090489826), 15));
+  }
+
+  Future<void> _openOnGoogleMapApp(double latitude, double longitude) async {
+    final Uri _url = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude');
+    //'https://www.google.com/maps/dir/?api=1&origin=13.7929841,100.636345&destination=13.9880741,100.8068477');
+
+    final bool nativeAppLaunchSucceeded = await launchUrl(
+      _url,
+      mode: LaunchMode.externalNonBrowserApplication,
+    );
+    if (!nativeAppLaunchSucceeded) {
+      await launchUrl(
+        _url,
+        mode: LaunchMode.externalNonBrowserApplication,
+      );
+    }
   }
 
   Future<Position> _getLocation() async {
@@ -72,12 +90,13 @@ class _MapsPageState extends State<MapsPage> {
                   zoom: 15),
               markers: {
                 Marker(
-                  markerId: MarkerId('1'),
-                  position: LatLng(14.036462698183556, 100.72544090489826),
-                  infoWindow: InfoWindow(
-                      title: 'ภาควิชาวิศวกรรมคอมพิวเตอร์',
-                      snippet: 'ภาควิชาวิศวกรรมคอมพิวเตอร์ มทร.ธัญบุรี'),
-                )
+                    markerId: MarkerId('1'),
+                    position: LatLng(14.036462698183556, 100.72544090489826),
+                    infoWindow: InfoWindow(
+                        title: 'ภาควิชาวิศวกรรมคอมพิวเตอร์',
+                        snippet: 'ภาควิชาวิศวกรรมคอมพิวเตอร์ มทร.ธัญบุรี'),
+                    onTap: () => _openOnGoogleMapApp(
+                        14.036462698183556, 100.72544090489826))
               },
             );
           } else {
