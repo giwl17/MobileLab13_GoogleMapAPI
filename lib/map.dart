@@ -70,6 +70,15 @@ class _MapsPageState extends State<MapsPage> {
                   target:
                       LatLng(userLocation!.latitude, userLocation!.longitude),
                   zoom: 15),
+              markers: {
+                Marker(
+                  markerId: MarkerId('1'),
+                  position: LatLng(14.036462698183556, 100.72544090489826),
+                  infoWindow: InfoWindow(
+                      title: 'ภาควิชาวิศวกรรมคอมพิวเตอร์',
+                      snippet: 'ภาควิชาวิศวกรรมคอมพิวเตอร์ มทร.ธัญบุรี'),
+                )
+              },
             );
           } else {
             return Center(
