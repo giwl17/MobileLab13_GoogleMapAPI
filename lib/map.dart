@@ -98,6 +98,18 @@ class _MapsPageState extends State<MapsPage> {
                     onTap: () => _openOnGoogleMapApp(
                         14.036462698183556, 100.72544090489826))
               },
+              polylines: {
+                Polyline(
+                    polylineId: PolylineId("p1"),
+                    color: Colors.red,
+                    points: const [
+                      LatLng(14.039618, 100.731428),
+                      LatLng(14.031242, 100.731834),
+                      LatLng(14.031383, 100.721086),
+                      LatLng(14.040377, 100.721125),
+                      LatLng(14.039618, 100.731428),
+                    ]),
+              },
             );
           } else {
             return Center(
